@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CORE.Infrastructure.Repositories\CORE.Infrastructure.Repositories.csproj" />
+    <ProjectReference Include="..\CORE.Infrastructure.Shared\CORE.Infrastructure.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

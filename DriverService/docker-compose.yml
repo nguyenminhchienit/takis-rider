@@ -1,0 +1,41 @@
+﻿
+services:
+  ### 🐰 RabbitMQ - Message Broker ###
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"    # Cổng AMQP để giao tiếp giữa các service
+      - "15672:15672"  # Giao diện quản lý RabbitMQ (http://localhost:15672)
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    networks:
+      - microservices-network
+
+  redis:
+      image: arm64v8/redis:alpine
+      container_name: redis
+      restart: always
+      ports:
+        - "6379:6379"
+      networks:
+        - microservices-network
+
+  consul:
+      image: arm64v8/consul:latest
+      container_name: consul
+      restart: always
+      ports:
+        - "8500:8500"
+        - "8600:8600/udp"
+      command: "agent -server -bootstrap -ui -client=0.0.0.0"
+      networks:
+        - microservices-network
+
+
+### 📌 Định nghĩa mạng chung cho tất cả các service ###
+networks:
+  microservices-network:
+    driver: bridge

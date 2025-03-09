@@ -1,0 +1,8 @@
+﻿# Loại bỏ thư mục Visual Studio
+.vs/
+# Loại bỏ thư mục build
+bin/
+obj/
+# Loại bỏ thư mục Debug và Release
+Debug/
+Release/

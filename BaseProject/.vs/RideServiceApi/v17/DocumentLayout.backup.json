@@ -1,0 +1,156 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Project\\RideServiceApi\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{99610613-1C25-4279-8EEB-E151495032E0}|CORE.Infrastructure.Repositories\\CORE.Infrastructure.Repositories.csproj|c:\\project\\rideserviceapi\\core.infrastructure.repositories\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99610613-1C25-4279-8EEB-E151495032E0}|CORE.Infrastructure.Repositories\\CORE.Infrastructure.Repositories.csproj|solutionrelative:core.infrastructure.repositories\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}|CORE.Infrastructure.Shared\\CORE.Infrastructure.Shared.csproj|c:\\project\\rideserviceapi\\core.infrastructure.shared\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}|CORE.Infrastructure.Shared\\CORE.Infrastructure.Shared.csproj|solutionrelative:core.infrastructure.shared\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}|CORE.Infrastructure.Shared\\CORE.Infrastructure.Shared.csproj|c:\\project\\rideserviceapi\\core.infrastructure.shared\\configdb\\sql\\dbsqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}|CORE.Infrastructure.Shared\\CORE.Infrastructure.Shared.csproj|solutionrelative:core.infrastructure.shared\\configdb\\sql\\dbsqlcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D043E753-8A16-47FB-A236-AEB5765350AB}|CORE.Applications\\CORE.Applications.csproj|c:\\project\\rideserviceapi\\core.applications\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D043E753-8A16-47FB-A236-AEB5765350AB}|CORE.Applications\\CORE.Applications.csproj|solutionrelative:core.applications\\servicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{99610613-1C25-4279-8EEB-E151495032E0}|CORE.Infrastructure.Repositories\\CORE.Infrastructure.Repositories.csproj|c:\\project\\rideserviceapi\\core.infrastructure.repositories\\config\\connectionconfigs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{99610613-1C25-4279-8EEB-E151495032E0}|CORE.Infrastructure.Repositories\\CORE.Infrastructure.Repositories.csproj|solutionrelative:core.infrastructure.repositories\\config\\connectionconfigs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|c:\\project\\rideserviceapi\\userserviceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|solutionrelative:userserviceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|c:\\project\\rideserviceapi\\userserviceapi\\controllers\\ridecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|solutionrelative:userserviceapi\\controllers\\ridecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|c:\\project\\rideserviceapi\\userserviceapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{7B02E7B9-1FA9-4067-A6CE-64DB9DB5A550}|UserServiceApi\\RideServiceApi.csproj|solutionrelative:userserviceapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\CORE.Applications\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "CORE.Applications\\ServiceCollectionExtensions.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\CORE.Applications\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "CORE.Applications\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:58:41.185Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DbSqlContext.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Shared\\ConfigDB\\SQL\\DbSqlContext.cs",
+              "RelativeDocumentMoniker": "CORE.Infrastructure.Shared\\ConfigDB\\SQL\\DbSqlContext.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Shared\\ConfigDB\\SQL\\DbSqlContext.cs",
+              "RelativeToolTip": "CORE.Infrastructure.Shared\\ConfigDB\\SQL\\DbSqlContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:58:03.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Shared\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "CORE.Infrastructure.Shared\\ServiceCollectionExtensions.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Shared\\ServiceCollectionExtensions.cs",
+              "RelativeToolTip": "CORE.Infrastructure.Shared\\ServiceCollectionExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:57:36.475Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ServiceCollectionExtensions.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Repositories\\ServiceCollectionExtensions.cs",
+              "RelativeDocumentMoniker": "CORE.Infrastructure.Repositories\\ServiceCollectionExtensions.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Repositories\\ServiceCollectionExtensions.cs*",
+              "RelativeToolTip": "CORE.Infrastructure.Repositories\\ServiceCollectionExtensions.cs*",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:57:04.64Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ConnectionConfigs.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Repositories\\Config\\ConnectionConfigs.cs",
+              "RelativeDocumentMoniker": "CORE.Infrastructure.Repositories\\Config\\ConnectionConfigs.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\CORE.Infrastructure.Repositories\\Config\\ConnectionConfigs.cs",
+              "RelativeToolTip": "CORE.Infrastructure.Repositories\\Config\\ConnectionConfigs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:56:18.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\UserServiceApi\\Program.cs",
+              "RelativeDocumentMoniker": "UserServiceApi\\Program.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\UserServiceApi\\Program.cs",
+              "RelativeToolTip": "UserServiceApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:55:41.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "RideController.cs",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\UserServiceApi\\Controllers\\RideController.cs",
+              "RelativeDocumentMoniker": "UserServiceApi\\Controllers\\RideController.cs",
+              "ToolTip": "C:\\Project\\RideServiceApi\\UserServiceApi\\Controllers\\RideController.cs",
+              "RelativeToolTip": "UserServiceApi\\Controllers\\RideController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-19T06:54:34.043Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Project\\RideServiceApi\\UserServiceApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "UserServiceApi\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Project\\RideServiceApi\\UserServiceApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "UserServiceApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-19T06:53:45.369Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

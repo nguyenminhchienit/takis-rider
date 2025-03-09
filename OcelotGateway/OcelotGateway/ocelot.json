@@ -1,0 +1,95 @@
+{
+    "GlobalConfiguration": {
+        "ServiceDiscoveryProvider": {
+            "Host": "localhost",
+            "Port": 8500,
+            "Type": "Consul",
+            "Scheme": "http"
+        },
+        "BaseUrl": "https://localhost:7277"
+    },
+    "Routes": [
+        // RIDE
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/get-ride-by-id/{id}",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/get-ride-id/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/get-ride-by-user/{id}",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/get-ride-user/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/get-ride-for-passenger/{id}",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/get-ride-for-passenger/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/get-ride-for-driver/{id}",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/get-ride-for-driver/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/request-ride",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/request-ride",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/update-status-ride",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/update-status-ride",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/accept-ride-for-driver",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/accept-ride-for-driver",
+            "UpstreamHttpMethod": [ "PATCH" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/cancle-ride",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/cancle-ride",
+            "UpstreamHttpMethod": [ "PATCH" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/review-ride",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/review-ride",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/ride-service/api/Ride/get-review-ride-of-driver",
+            "DownstreamScheme": "https",
+            "ServiceName": "ride-service",
+            "UpstreamPathTemplate": "/api/gateway/ride/get-review-ride-of-driver",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+
+
+        //USER
+        {
+            "DownstreamPathTemplate": "/user-service/identity/api/User/get-user-by-id/{id}",
+            "DownstreamScheme": "https",
+            "ServiceName": "user-service",
+            "UpstreamPathTemplate": "/api/gateway/users/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        }
+
+    ]
+}
