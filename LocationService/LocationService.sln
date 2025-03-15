@@ -9,15 +9,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{CEA397DC-2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infras", "infras", "{CEA10A12-ECEF-4E53-A7D8-BF96EDAA0064}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CORE.Infrastructure.Integrations", "CORE.Infrastructure.Integrations\CORE.Infrastructure.Integrations.csproj", "{25E316BE-ACF9-4B98-9F8F-1D18A97E1F33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE.Infrastructure.Integrations", "CORE.Infrastructure.Integrations\CORE.Infrastructure.Integrations.csproj", "{25E316BE-ACF9-4B98-9F8F-1D18A97E1F33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CORE.Infrastructure.Repositories", "CORE.Infrastructure.Repositories\CORE.Infrastructure.Repositories.csproj", "{99610613-1C25-4279-8EEB-E151495032E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE.Infrastructure.Repositories", "CORE.Infrastructure.Repositories\CORE.Infrastructure.Repositories.csproj", "{99610613-1C25-4279-8EEB-E151495032E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CORE.Infrastructure.Shared", "CORE.Infrastructure.Shared\CORE.Infrastructure.Shared.csproj", "{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE.Infrastructure.Shared", "CORE.Infrastructure.Shared\CORE.Infrastructure.Shared.csproj", "{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CORE.Applications", "CORE.Applications\CORE.Applications.csproj", "{D043E753-8A16-47FB-A236-AEB5765350AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CORE.Applications", "CORE.Applications\CORE.Applications.csproj", "{D043E753-8A16-47FB-A236-AEB5765350AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocationServiceApi", "LocationServiceApi\LocationServiceApi.csproj", "{905F0A87-6BCB-4759-B437-514DE7123DC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LocationServiceApi", "LocationServiceApi\LocationServiceApi.csproj", "{905F0A87-6BCB-4759-B437-514DE7123DC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F00020CF-31EA-481C-B07C-AC0E5D6E4213}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,5 +62,8 @@ Global
 		{8B9B2D2F-5692-4E55-A19E-8CE89F0E222A} = {CEA10A12-ECEF-4E53-A7D8-BF96EDAA0064}
 		{D043E753-8A16-47FB-A236-AEB5765350AB} = {CEA397DC-207E-4C34-885F-547AE32A8634}
 		{905F0A87-6BCB-4759-B437-514DE7123DC5} = {6C62CD9A-C489-4CB4-9A76-9822895BBFDF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27FE1E7C-61B5-448E-AE7E-E1060FB9C32E}
 	EndGlobalSection
 EndGlobal

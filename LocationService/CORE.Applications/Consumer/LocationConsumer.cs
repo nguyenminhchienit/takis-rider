@@ -34,7 +34,7 @@ namespace CORE.Applications.Consumer
 
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            string queueName = _configuration["RabbitMQ:DriverRequestQueue"];
+            string queueName = _configuration["RabbitMQ:LocationRequestQueue"];
             channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);
             var consumer = new EventingBasicConsumer(channel);
             consumer.Received += async (model, ea) =>
@@ -42,7 +42,7 @@ namespace CORE.Applications.Consumer
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var rideRequest = JsonSerializer.Deserialize<RideAllocationRequest>(message);
-                Console.WriteLine($"📤 Nhan yêu cầu tu Drive DriverRequestQueue:cho chuyen {rideRequest.RideId}");
+                Console.WriteLine($"📤 Nhan yêu cầu tu Drive LocationRequestQueue:cho chuyen {rideRequest.RideId}");
 
                 if (rideRequest != null)
                 {

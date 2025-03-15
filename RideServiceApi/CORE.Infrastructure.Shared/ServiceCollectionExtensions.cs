@@ -12,9 +12,12 @@ namespace CORE.Infrastructure.Shared
             IConfiguration configuration)
         {
             services.AddDbContext<DbSqlContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    sqlOptions => sqlOptions.EnableRetryOnFailure()
+                ));
 
-           
+
+
         }
 
 

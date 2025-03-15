@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CORE.Infrastructure.Shared.Migrations
 {
     [DbContext(typeof(DbSqlContext))]
-    [Migration("20250221024752_update ride review model")]
-    partial class updateridereviewmodel
+    [Migration("20250313075922_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

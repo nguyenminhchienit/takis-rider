@@ -90,5 +90,10 @@ namespace CORE.Infrastructure.Repositories.Location.Commands
             var drivers = await _redis.GetDatabase().SetMembersAsync(ONLINE_DRIVERS_KEY);
             return drivers.Select(d => (d.ToString())).ToList();
         }
+
+        public Task<bool> UpdateDriverLocationAsync(string driverId, double latitude, double longitude)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
