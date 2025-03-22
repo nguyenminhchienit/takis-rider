@@ -13,6 +13,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using BCrypt.Net;
+using CORE.Infrastructure.Repositories.Services.Authen;
+using CORE.Infrastructure.Shared.Models.User.Response;
 
 namespace CORE.Infrastructure.Repositories.User.Commands
 {
@@ -23,46 +26,40 @@ namespace CORE.Infrastructure.Repositories.User.Commands
         private readonly SignInManager<UserModel> _signInManager;
         private readonly JwtSettings _jwtConfigs;
         private readonly DbSqlContext dbSqlContext;
+        private readonly Authenticate authen;
 
-        public MainUserCommandRepository(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, IOptions<JwtSettings> configuration, DbSqlContext _dbSqlContext)
+        public MainUserCommandRepository(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, 
+            IOptions<JwtSettings> configuration, DbSqlContext _dbSqlContext, Authenticate _authen)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtConfigs = configuration.Value;
             dbSqlContext = _dbSqlContext;
+            authen = _authen;
         }
-        public async Task<string?> AuthenticateAsync(UserLoginRequest request)
+        public async Task<AuthResponse> AuthenticateAsync(UserLoginRequest request)
         {
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user == null) return null;
+            if (user == null) return new AuthResponse { ErrorMessage = "Không tìm thấy tài khoản" };
 
-            //var result = await _signInManager.PasswordSignInAsync(user, request.Password, false, false);
-            //if (!result.Succeeded) return null;
+            // Xác minh mật khẩu
+            bool isVerified = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
 
-            if (request.Password != user.PasswordHash) return null;
+            if (!isVerified) return new AuthResponse { ErrorMessage = "Mật khẩu hoặc tài khoản không chính xác" };
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_jwtConfigs.Key);
+            var accessToken = authen.GenerateAccessToken(user);
+            var refreshToken = authen.GenerateRefreshToken();
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Email, user.Email)
-                }),
-                Expires = DateTime.UtcNow.AddHours(2),
-                Issuer = _jwtConfigs.Issuer,
-                Audience = _jwtConfigs.Audience,
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userManager.UpdateAsync(user);
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return (new AuthResponse { AccessToken = accessToken, RefreshToken =  refreshToken });
         }
 
-        public async Task<UserRequest?> CreateUserAsync(UserRequest request)
+        public async Task<UserRequest?> CreateUserAsync(RegisterModel request)
         {
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var user = new UserModel
             {
                 UserName = request.Email,
@@ -70,7 +67,7 @@ namespace CORE.Infrastructure.Repositories.User.Commands
                 FullName = request.FullName,
                 Address = request.Address,
                 IsDriver = request.IsDriver,
-                PasswordHash = request.Password,
+                PasswordHash = hashedPassword,
             };
 
             var result = await _userManager.CreateAsync(user);
@@ -84,6 +81,34 @@ namespace CORE.Infrastructure.Repositories.User.Commands
                 Address = user.Address,
                 IsDriver = user.IsDriver
             };
+        }
+
+        public async Task<AuthResponse?> RefreshTokenForDb(RefreshTokenRequest refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken.RefreshToken))
+                throw new ArgumentException("Refresh Token là bắt buộc");
+
+            var user1 = await _userManager.Users.FirstAsync();
+
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.RefreshToken == refreshToken.RefreshToken);
+
+            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+                throw new ArgumentException("Refresh Token không hợp lệ hoặc đã hết hạn");
+
+            // 🔥 Tạo Access Token mới
+            var newAccessToken = authen.GenerateAccessToken(user);
+            var newRefreshToken = authen.GenerateRefreshToken();
+
+            // 🔥 Cập nhật Refresh Token mới cho User
+            user.RefreshToken = newRefreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userManager.UpdateAsync(user);
+
+            return (new AuthResponse
+            {
+                AccessToken = newAccessToken,
+                RefreshToken = newRefreshToken
+            });
         }
 
         public async Task<bool> RegisterMakeDriverAsync(UserRegisterMakeDriverModel request)

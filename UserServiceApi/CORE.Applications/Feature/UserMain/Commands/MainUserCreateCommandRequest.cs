@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using CORE.Applications.MessageQueue;
 using CORE.Infrastructure.Repositories.User.Interfaces;
 using CORE.Infrastructure.Shared.Models.User.Request;
@@ -11,7 +7,7 @@ using MediatR;
 
 namespace CORE.Applications.Feature.UserMain.Commands
 {
-    public class MainUserCreateCommandRequest : UserRequest, IRequest<ResponseCus<UserRequest>>
+    public class MainUserCreateCommandRequest : RegisterModel, IRequest<ResponseCus<UserRequest>>
     {
         public class QueryHandler : IRequestHandler<MainUserCreateCommandRequest, ResponseCus<UserRequest>>
         {

@@ -5,6 +5,7 @@ using CORE.Infrastructure.Shared.ConfigDB.SQL;
 using CORE.Infrastructure.Shared.Models.Driver.Request;
 using CORE.Infrastructure.Shared.Models.Driver.Response;
 using StackExchange.Redis;
+using System.Text.Json;
 
 namespace CORE.Infrastructure.Repositories.Driver.Commands
 {
@@ -39,7 +40,7 @@ namespace CORE.Infrastructure.Repositories.Driver.Commands
             _driverProducer = driverProducer;
         }
 
-        public async Task<bool> FindAndAssignDriverAsyncNew(Dictionary<Guid, List<DriverInfo>> rideDriverQueue) //rideDriverQueue la ds driver doi
+        public async Task<bool> FindAndAssignDriverAsyncNew(Dictionary<Guid, List<DriverInfo>> rideDriverQueue)
         {
             foreach (var rideEntry in rideDriverQueue)
             {
@@ -49,54 +50,68 @@ namespace CORE.Infrastructure.Repositories.Driver.Commands
                 if (availableDrivers == null || availableDrivers.Count == 0)
                 {
                     _notificationProducer.SendNotification(rideId.ToString(), "⚠️ Không có tài xế nào khả dụng. Vui lòng thử lại sau.");
-                    return false;
+                    continue;
                 }
 
-                // Sắp xếp danh sách tài xế theo khoảng cách gần nhất (nếu có)
-                availableDrivers = availableDrivers.OrderBy(d => d.Distance).ToList();
+                // Sắp xếp danh sách tài xế theo khoảng cách gần nhất
+                rideDriverQueue[rideId] = availableDrivers.OrderBy(d => d.Distance).ToList();
 
-                if (!rideDriverQueue.ContainsKey(rideId))
-                {
-                    rideDriverQueue[rideId] = new List<DriverInfo>(availableDrivers);
-                }
-
-                // Gửi thông báo và yêu cầu đến tài xế đầu tiên
-                await NotifyAndAssignNextDriver(rideId, rideDriverQueue);
+                // Lặp qua tất cả tài xế của chuyến đi này
+                await NotifyAllDriversSequentially(rideId, rideDriverQueue[rideId]);
             }
 
             return true;
         }
 
-        private async Task NotifyAndAssignNextDriver(Guid rideId, Dictionary<Guid, List<DriverInfo>> rideDriverQueue)
+        private async Task NotifyAllDriversSequentially(Guid rideId, List<DriverInfo> driverList)
         {
-            if (!rideDriverQueue.ContainsKey(rideId) || rideDriverQueue[rideId].Count == 0)
+            foreach (var driver in driverList)
             {
-                Console.WriteLine($"⚠️ Không còn tài xế nào khả dụng cho chuyến {rideId}");
-                _notificationProducer.SendNotification(rideId.ToString(), "❌ Không có tài xế nào nhận chuyến. Vui lòng thử lại sau.");
-                return;
+                Console.WriteLine($"📩 Gửi thông báo đến tài xế {driver.DriverId} cho chuyến {rideId}");
+
+                var notificationMessage = JsonSerializer.Serialize(new
+                {
+                    RideId = rideId,
+                    DriverId = driver.DriverId,
+                    Message = $"🚖 Bạn có một yêu cầu chuyến đi mới ({rideId}). Chấp nhận?"
+                });
+
+                _notificationProducer.SendNotification(driver.DriverId, notificationMessage);
+
+                // Chờ tài xế phản hồi (giả lập 5 giây)
+                await Task.Delay(5000);
+
+                // Kiểm tra xem tài xế có chấp nhận hay không
+                if (await CheckDriverAcceptance(driver.DriverId))
+                {
+                    Console.WriteLine($"✅ Tài xế {driver.DriverId} đã chấp nhận chuyến {rideId}");
+
+                    var driverRequest = new DriverAllocationRequest
+                    {
+                        RideId = rideId,
+                        DriverId = driver.DriverId
+                    };
+
+                    //_driverProducer.SendDriverRequest(driverRequest);
+                    return; // Dừng vòng lặp ngay khi có tài xế nhận chuyến
+                }
+
+                Console.WriteLine($"❌ Tài xế {driver.DriverId} không phản hồi, thử tài xế tiếp theo...");
             }
 
-            var nextDriver = rideDriverQueue[rideId][0]; // Lấy tài xế tiếp theo
-            rideDriverQueue[rideId].RemoveAt(0); // Xóa khỏi danh sách chờ
-
-            // Gửi thông báo trước
-            _notificationProducer.SendNotification(nextDriver.DriverId, $"🚖 Bạn có một yêu cầu chuyến đi mới ({rideId}). Chấp nhận?");
-
-            Console.WriteLine($"📩 Gửi thông báo đến tài xế {nextDriver.DriverId}");
-
-            await Task.Delay(3000); // Chờ 3 giây cho tài xế xem xét
-
-            var driverRequest = new DriverAllocationRequest
-            {
-                RideId = rideId,
-                DriverId = nextDriver.DriverId,
-                //PickupLatitude = nextDriver.PickupLatitude,
-                //PickupLongitude = nextDriver.PickupLongitude
-            };
-
-            Console.WriteLine($"📤 Gửi yêu cầu đến tài xế: {nextDriver.DriverId}");
-            //_driverProducer.SendDriverRequest(driverRequest);
+            Console.WriteLine($"🚫 Không còn tài xế nào nhận chuyến {rideId}");
+            _notificationProducer.SendNotification(rideId.ToString(), "❌ Không có tài xế nào nhận chuyến. Vui lòng thử lại sau.");
         }
+
+
+        private async Task<bool> CheckDriverAcceptance(string driverId)
+        {
+            // Giả lập tài xế có 30% khả năng chấp nhận
+            await Task.Delay(500); // Giả lập thời gian xử lý
+            return new Random().Next(1, 101) <= 30;
+        }
+
+
 
         public async Task<bool> FindAndAssignDriverAsync(RideAllocationRequest request)
         {

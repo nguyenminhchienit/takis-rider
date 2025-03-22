@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using CORE.Infrastructure.Shared.ConfigDB.SQL;
 using CORE.Infrastructure.Shared.Models.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CORE.Infrastructure.Shared
 {
@@ -20,9 +22,7 @@ namespace CORE.Infrastructure.Shared
             services.AddDbContext<DbSqlContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<UserModel, IdentityRole>()
-            .AddEntityFrameworkStores<DbSqlContext>()
-            .AddDefaultTokenProviders();
+            
 
 
             services.AddScoped<UserManager<UserModel>>();

@@ -47,6 +47,8 @@ namespace CORE.Applications.Feature.Notification.MessageConsumer
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var notification = JsonSerializer.Deserialize<NotificationMessage>(message);
+                Console.WriteLine($"[✓] Received message: {message}");
+                Console.WriteLine($"[✓] Message Obj: {notification}");
 
                 if (notification != null)
                 {

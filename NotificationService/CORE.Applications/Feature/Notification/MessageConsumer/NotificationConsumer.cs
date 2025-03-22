@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿/*using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
@@ -46,3 +46,4 @@ namespace CORE.Applications.Feature.Notification.MessageConsumer
         }
     }
 }
+*/

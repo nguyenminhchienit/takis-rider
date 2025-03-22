@@ -18,7 +18,7 @@ namespace CORE.Applications
         {
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
-            services.AddHostedService<NotificationConsumer>();
+            //services.AddHostedService<NotificationConsumer>();
 
             services.AddHostedService<NotificationFromDriveConsumer>();
         }

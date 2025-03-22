@@ -33,10 +33,16 @@ namespace CORE.Infrastructure.Repositories.Driver.Producer
             string queueName = _configuration["RabbitMQ:NotificationQueue"];
 
             channel.QueueDeclare(queue: queueName, durable: true, exclusive: false, autoDelete: false);
-            var notification = JsonSerializer.Serialize(new { userId, message });
+            var notification = JsonSerializer.Serialize(new NotificationMessage { UserId = userId, Message = message });
             var body = Encoding.UTF8.GetBytes(notification);
 
             channel.BasicPublish(exchange: "", routingKey: queueName, basicProperties: null, body: body);
         }
+    }
+
+    public class NotificationMessage
+    {
+        public string UserId { get; set; } = string.Empty;   // ID của người nhận thông báo
+        public string Message { get; set; } = string.Empty; // Nội dung thông báo
     }
 }

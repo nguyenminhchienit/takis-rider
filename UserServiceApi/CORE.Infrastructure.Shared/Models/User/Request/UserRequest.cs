@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace CORE.Infrastructure.Shared.Models.User.Request
 {
-    public class UserRequest
+    public class UserRequest : IdentityUser
     {
-        public string Id { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
+
         public string Address { get; set; } = string.Empty;
         public bool IsDriver { get; set; }
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
 
-        public string Password { get; set; } = string.Empty;
+        public bool IsTwoFactorEnabled { get; set; } = false;
+        public string? TwoFactorCode { get; set; }
+        public DateTime? TwoFactorExpiry { get; set; }
     }
 }

@@ -18,5 +18,12 @@ namespace CORE.Infrastructure.Shared.Models.User
 
         [Required]
         public bool IsDriver { get; set; } = false;
+
+        public string? RefreshToken { get; set; }
+        public DateTime RefreshTokenExpiryTime { get; set; }
+
+        public bool IsTwoFactorEnabled { get; set; } = false;
+        public string? TwoFactorCode { get; set; }
+        public DateTime? TwoFactorExpiry { get; set; }
     }
 }
