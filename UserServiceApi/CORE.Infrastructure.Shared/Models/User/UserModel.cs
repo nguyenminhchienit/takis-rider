@@ -24,6 +24,8 @@ namespace CORE.Infrastructure.Shared.Models.User
 
         public bool IsTwoFactorEnabled { get; set; } = false;
         public string? TwoFactorCode { get; set; }
+
+        public string TwoFactorMethod { get; set; } = "Email";
         public DateTime? TwoFactorExpiry { get; set; }
     }
 }

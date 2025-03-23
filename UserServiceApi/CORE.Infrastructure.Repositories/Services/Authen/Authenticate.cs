@@ -1,6 +1,7 @@
 ﻿using CORE.Infrastructure.Shared.Models.User;
 using CORE.Infrastructure.Shared.Models.User.Request;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -51,5 +52,7 @@ namespace CORE.Infrastructure.Repositories.Services.Authen
                 return Convert.ToBase64String(randomNumber);
             }
         }
+
+        
     }
 }

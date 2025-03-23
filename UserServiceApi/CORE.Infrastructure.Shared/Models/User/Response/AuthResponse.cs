@@ -12,6 +12,8 @@ namespace CORE.Infrastructure.Shared.Models.User.Response
         public string RefreshToken { get; set; } = string.Empty;
 
         public string? ErrorMessage { get; set; }
+
+        public string? Email { get; set; }
     }
 
 }

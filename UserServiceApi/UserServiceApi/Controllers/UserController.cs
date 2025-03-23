@@ -48,6 +48,18 @@ namespace UserServiceApi.Controllers
         public async Task<IActionResult> RefreshToken([FromBody] MainCreateRefreshToken request)
         => Ok(await mediator.Send(request).ConfigureAwait(false));
 
+        [HttpPost("auth/verify-2fa")]
+        [ProducesResponseType(typeof(ResponseCus<int>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Veryfi2FA([FromBody] MainVerify2FARequest request)
+        => Ok(await mediator.Send(request).ConfigureAwait(false));
+
+        [HttpPost("auth/enable-2fa")]
+        [ProducesResponseType(typeof(ResponseCus<int>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Enable2FA([FromBody] MainEnable2FARequest request)
+        => Ok(await mediator.Send(request).ConfigureAwait(false));
+
 
         [HttpGet("get-user-by-id/{id}")]
         [Authorize]
@@ -55,5 +67,13 @@ namespace UserServiceApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetUserById(string id)
         => Ok(await mediator.Send(new MainGetUserByIdQueryRequest(id)).ConfigureAwait(false));
+
+
+        [HttpGet("get-user-current")]
+        [Authorize]
+        [ProducesResponseType(typeof(ResponseCus<int>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> GetUserCurrent()
+        => Ok(await mediator.Send(new MainGetUserCurrentRequest()).ConfigureAwait(false));
     }
 }

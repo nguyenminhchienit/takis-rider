@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CORE.Applications\CORE.Applications.csproj" />
+    <ProjectReference Include="..\CORE.Infrastructure.Integrations\CORE.Infrastructure.Integrations.csproj" />
     <ProjectReference Include="..\CORE.Infrastructure.Shared\CORE.Infrastructure.Shared.csproj" />
   </ItemGroup>
 

@@ -11,5 +11,7 @@ namespace CORE.Infrastructure.Repositories.User.Interfaces
     {
         Task<UserRequest?> GetUserByIdAsync(string id);
 
+        Task<UserRequest?> GetUserCurrent();
+
     }
 }

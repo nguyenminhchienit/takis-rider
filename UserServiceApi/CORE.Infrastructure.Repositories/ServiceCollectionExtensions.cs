@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CORE.Infrastructure.Repositories.Config;
 using CORE.Infrastructure.Repositories.Services.Authen;
+using CORE.Infrastructure.Repositories.Services.EmailService;
 using CORE.Infrastructure.Repositories.User.Commands;
 using CORE.Infrastructure.Repositories.User.Interfaces;
 using CORE.Infrastructure.Repositories.User.Queries;
@@ -28,6 +29,10 @@ namespace CORE.Infrastructure.Repositories
             services.AddScoped<IMainUserCommand, MainUserCommandRepository>();
             services.AddScoped<IMainUserQuery, MainUserQueryRepository>();
             services.AddScoped<Authenticate>();
+            services.AddScoped<EmailService>();
+            services.AddScoped<SmsService>();
+
+            services.AddHttpContextAccessor();
         }
     }
 }

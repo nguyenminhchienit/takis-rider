@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 using BCrypt.Net;
 using CORE.Infrastructure.Repositories.Services.Authen;
 using CORE.Infrastructure.Shared.Models.User.Response;
+using CORE.Infrastructure.Repositories.Services.EmailService;
 
 namespace CORE.Infrastructure.Repositories.User.Commands
 {
@@ -27,15 +28,20 @@ namespace CORE.Infrastructure.Repositories.User.Commands
         private readonly JwtSettings _jwtConfigs;
         private readonly DbSqlContext dbSqlContext;
         private readonly Authenticate authen;
+        private readonly EmailService emailService;
+        private readonly SmsService smsService;
 
         public MainUserCommandRepository(UserManager<UserModel> userManager, SignInManager<UserModel> signInManager, 
-            IOptions<JwtSettings> configuration, DbSqlContext _dbSqlContext, Authenticate _authen)
+            IOptions<JwtSettings> configuration, DbSqlContext _dbSqlContext, Authenticate _authen, 
+            EmailService _emailService, SmsService _smsService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtConfigs = configuration.Value;
             dbSqlContext = _dbSqlContext;
             authen = _authen;
+            emailService = _emailService;
+            smsService = _smsService;
         }
         public async Task<AuthResponse> AuthenticateAsync(UserLoginRequest request)
         {
@@ -47,6 +53,34 @@ namespace CORE.Infrastructure.Repositories.User.Commands
 
             if (!isVerified) return new AuthResponse { ErrorMessage = "Mật khẩu hoặc tài khoản không chính xác" };
 
+            // 🔥 Nếu 2FA được bật, tạo mã OTP và gửi qua Email/SMS
+            if (await _userManager.GetTwoFactorEnabledAsync(user))
+            {
+                var token = await _userManager.GenerateTwoFactorTokenAsync(user, user.TwoFactorMethod); // Hoặc "Phone"
+
+                // 🔥 Lưu mã OTP vào database
+                /*user.TwoFactorCode = token;
+                user.TwoFactorExpiry = DateTime.UtcNow.AddMinutes(5);
+                await _userManager.UpdateAsync(user);*/
+
+
+
+                // Gửi mã qua Email hoặc SMS
+                //await emailService.SendEmailAsync("nguyenminhchien2003@gmail.com", "Mã xác thực 2FA", $"Mã xác thực của bạn là: {token}");
+
+                // 🔥 Gửi mã OTP qua phương thức mà người dùng đã chọn
+                if (user.TwoFactorMethod == "Email")
+                {
+                    await emailService.SendEmailAsync("nguyenminhchien2003@gmail.com", "Mã xác thực 2FA", $"Mã OTP của bạn là: {token}");
+                }
+                else if (user.TwoFactorMethod == "SMS")
+                {
+                    await smsService.SendSmsAsync("+84392845906", $"Mã OTP của bạn là: {token}");
+                }
+
+                return (new AuthResponse  {Email = user.Email ,ErrorMessage = "Mã xác thực đã được gửi"});
+            }
+
             var accessToken = authen.GenerateAccessToken(user);
             var refreshToken = authen.GenerateRefreshToken();
 
@@ -54,7 +88,40 @@ namespace CORE.Infrastructure.Repositories.User.Commands
             user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
             await _userManager.UpdateAsync(user);
 
-            return (new AuthResponse { AccessToken = accessToken, RefreshToken =  refreshToken });
+            return (new AuthResponse { Email = user.Email, AccessToken = accessToken, 
+                RefreshToken =  refreshToken,  ErrorMessage = "Đăng nhập thành công" });
+        }
+
+        public async Task<bool> EnableTwoFactor(Enable2FARequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null) return false;
+
+            user.TwoFactorEnabled = request.Enable;
+            await _userManager.UpdateAsync(user);
+
+            return true;
+        }
+
+        public async Task<AuthResponse> VerifyTwoFactor(Verify2FAModel request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null) return new AuthResponse { ErrorMessage = "Không tìm thấy tài khoản" };
+
+            // Xác thực mã OTP bằng Identity
+            var isValid = await _userManager.VerifyTwoFactorTokenAsync(user, "Email", request.Code); // Hoặc "Phone"
+            if (!isValid) return new AuthResponse { ErrorMessage = "Mã xác thực không hợp lệ hoặc đã hết hạn" };
+
+
+            // ✅ Cấp Access Token sau khi xác thực thành công
+            var accessToken = authen.GenerateAccessToken(user);
+            var refreshToken = authen.GenerateRefreshToken();
+
+            user.RefreshToken = refreshToken;
+            user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+            await _userManager.UpdateAsync(user);
+
+            return (new AuthResponse { AccessToken = accessToken, RefreshToken = refreshToken });
         }
 
         public async Task<UserRequest?> CreateUserAsync(RegisterModel request)

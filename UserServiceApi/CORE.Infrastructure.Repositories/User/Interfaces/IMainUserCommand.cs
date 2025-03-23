@@ -14,7 +14,10 @@ namespace CORE.Infrastructure.Repositories.User.Interfaces
         Task<UserRequest?> CreateUserAsync(RegisterModel request);
         Task<AuthResponse?> RefreshTokenForDb(RefreshTokenRequest refreshToken);
         Task<AuthResponse> AuthenticateAsync(UserLoginRequest request);
+        Task<AuthResponse> VerifyTwoFactor(Verify2FAModel request);
 
         Task<bool> RegisterMakeDriverAsync(UserRegisterMakeDriverModel request);
+
+        Task<bool> EnableTwoFactor(Enable2FARequest request);
     }
 }

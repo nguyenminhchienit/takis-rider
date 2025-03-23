@@ -2,6 +2,7 @@
 using System.Text;
 using Consul;
 using CORE.Applications;
+using CORE.Infrastructure.Integrations.Utils;
 using CORE.Infrastructure.Repositories;
 using CORE.Infrastructure.Shared;
 using CORE.Infrastructure.Shared.ConfigDB.SQL;
@@ -15,10 +16,10 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(c =>
+/*builder.Services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(c =>
 {
     c.Address = new Uri(builder.Configuration["Consul:Host"]);
-}));
+}));*/
 
 // Tích hợp MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
@@ -34,7 +35,8 @@ services.AddCoreApplication(configuration);
 // ✅ Cấu hình Identity (Tích hợp với Authentication)
 services.AddIdentity<UserModel, IdentityRole>()
     .AddEntityFrameworkStores<DbSqlContext>()
-    .AddDefaultTokenProviders();
+    .AddDefaultTokenProviders()
+    .AddTokenProvider<SmsTokenProvider<UserModel>>("SMS"); // Đăng ký SMS Token Provider
 
 // 🔥 Thêm cấu hình Cookie để tránh xung đột với JWT Authentication
 services.ConfigureApplicationCookie(options =>
@@ -133,7 +135,7 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 
 // ✅ Đăng ký Service vào Consul
-var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+/*var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 var consulClient = app.Services.GetRequiredService<IConsulClient>();
 
 var registration = new AgentServiceRegistration
@@ -148,6 +150,6 @@ consulClient.Agent.ServiceRegister(registration).Wait();
 lifetime.ApplicationStopping.Register(() =>
 {
     consulClient.Agent.ServiceDeregister(builder.Configuration["Consul:ServiceId"]).Wait();
-});
+});*/
 
 app.Run();
