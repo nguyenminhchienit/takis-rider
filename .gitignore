@@ -1,2 +1,8 @@
 appsettings.json
-appsettings.Development.json
+
+docker exec -it kafkaweb-kafka-1 kafka-topics.sh --create --topic orders --bootstrap-server localhost:9092 --partitions 3 --replication-factor 1
+
+
+
+xem thong tin topic, partition, leader broker
+docker exec -it kafkaweb-kafka-1 kafka-topics --describe --bootstrap-server kafka:29092 --topic kafka-topic

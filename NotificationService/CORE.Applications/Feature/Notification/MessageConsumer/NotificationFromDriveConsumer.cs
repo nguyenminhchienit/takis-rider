@@ -47,14 +47,13 @@ namespace CORE.Applications.Feature.Notification.MessageConsumer
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 var notification = JsonSerializer.Deserialize<NotificationMessage>(message);
-                Console.WriteLine($"[✓] Received message: {message}");
-                Console.WriteLine($"[✓] Message Obj: {notification}");
+                Console.WriteLine($"[✓] Nhan TB: {notification}");
 
                 if (notification != null)
                 {
                     using var scope = _serviceScopeFactory.CreateScope();
                     var notificationService = scope.ServiceProvider.GetRequiredService<INoti>();
-                    notificationService.SendNotification(notification.UserId, notification.Message);
+                    notificationService.SendNotification(notification.UserId, notification);
                 }
             };
 

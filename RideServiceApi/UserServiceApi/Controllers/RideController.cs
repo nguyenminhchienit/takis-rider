@@ -7,6 +7,7 @@ using CORE.Applications.Feature.Ride.Commnads;
 using CORE.Applications.MessageQueue.Ride;
 using CORE.Applications.Feature.ReviewRide.Commands;
 using CORE.Applications.Feature.ReviewRide.Queries;
+using StackExchange.Redis;
 
 namespace RideServiceApi.Controllers
 {
@@ -16,9 +17,11 @@ namespace RideServiceApi.Controllers
     public class RideController : ControllerBase
     {
         private readonly IMediator mediator;
-        public RideController(IMediator _mediator)
+        private readonly IConnectionMultiplexer redis;
+        public RideController(IMediator _mediator, IConnectionMultiplexer _redis)
         {
             mediator = _mediator;
+            redis = _redis;
         }
 
         [HttpGet("get-ride-by-id/{id}")]
@@ -85,6 +88,24 @@ namespace RideServiceApi.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> GetReviewRideOfDriver(string driverId)
         => Ok(await mediator.Send(new GetReviewRideOfDriverQueryRequest(driverId)).ConfigureAwait(false));
+
+
+        [HttpPost("accept")]
+        public async Task<IActionResult> AcceptRide(string driverId, Guid rideId)
+        {
+            // Kiểm tra nếu đã có người nhận thì từ chối
+            var existingDriverId = await redis.GetDatabase().StringGetAsync($"Ride:{rideId}:AcceptedDriverId");
+            if (!string.IsNullOrEmpty(existingDriverId.ToString()))
+            {
+                return Conflict("Đã có tài xế nhận chuyến này.");
+            }
+
+            // Ghi vào Redis
+            await redis.GetDatabase().StringSetAsync($"Ride:{rideId}:AcceptedDriverId", driverId.ToString());
+
+            return Ok("Bạn đã nhận chuyến thành công.");
+        }
+
 
 
     }

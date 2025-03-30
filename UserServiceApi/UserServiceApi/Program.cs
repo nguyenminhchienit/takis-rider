@@ -16,10 +16,10 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-/*builder.Services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(c =>
+builder.Services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(c =>
 {
     c.Address = new Uri(builder.Configuration["Consul:Host"]);
-}));*/
+}));
 
 // Tích hợp MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
@@ -135,7 +135,7 @@ if (app.Environment.IsDevelopment())
 app.MapControllers();
 
 // ✅ Đăng ký Service vào Consul
-/*var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
+var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 var consulClient = app.Services.GetRequiredService<IConsulClient>();
 
 var registration = new AgentServiceRegistration
@@ -150,6 +150,6 @@ consulClient.Agent.ServiceRegister(registration).Wait();
 lifetime.ApplicationStopping.Register(() =>
 {
     consulClient.Agent.ServiceDeregister(builder.Configuration["Consul:ServiceId"]).Wait();
-});*/
+});
 
 app.Run();

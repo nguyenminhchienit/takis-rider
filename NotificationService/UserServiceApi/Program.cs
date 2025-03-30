@@ -3,10 +3,12 @@ using CORE.Applications;
 using CORE.Infrastructure.Repositories;
 using CORE.Infrastructure.Shared;
 using CORE.Infrastructure.Shared.ConfigDB.MongoDB;
+using CORE.Infrastructure.Shared.HubNoti;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
 
 
 builder.Services.AddControllers();
@@ -26,6 +28,8 @@ services.AddCoreApplication(configuration);
 
 
 var app = builder.Build();
+app.MapHub<NotificationHub>("/notificationHub");
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

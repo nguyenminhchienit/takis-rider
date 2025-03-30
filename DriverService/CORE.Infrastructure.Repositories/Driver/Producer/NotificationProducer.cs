@@ -18,7 +18,7 @@ namespace CORE.Infrastructure.Repositories.Driver.Producer
             _configuration = configuration;
         }
 
-        public void SendNotification(string userId, string message)
+        public void SendNotification(string userId, NotiObjList message)
         {
             var factory = new ConnectionFactory()
             {
@@ -43,6 +43,23 @@ namespace CORE.Infrastructure.Repositories.Driver.Producer
     public class NotificationMessage
     {
         public string UserId { get; set; } = string.Empty;   // ID của người nhận thông báo
-        public string Message { get; set; } = string.Empty; // Nội dung thông báo
+        public NotiObjList Message { get; set; } // Nội dung thông báo
+    }
+
+    public class NotiObjList
+    {
+        public List<DriverInfo> rideDriverQueue { get; set; } = new();
+        public Guid RideId { get; set; }
+        public string Message { get; set; } = string.Empty;
+    }
+
+    public class DriverInfo
+    {
+        public string DriverId { get; set; } = string.Empty;
+        public double Rating { get; set; }
+        public double CancellationRate { get; set; }
+
+        public Guid RideId { get; set; }
+        public double Distance { get; set; }
     }
 }

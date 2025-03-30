@@ -3,11 +3,13 @@ using Consul;
 using CORE.Applications;
 using CORE.Infrastructure.Repositories;
 using CORE.Infrastructure.Shared;
+using StackExchange.Redis;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-
+builder.Services.AddSingleton<IConnectionMultiplexer>(sp =>
+    ConnectionMultiplexer.Connect("localhost:6379"));
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(c =>

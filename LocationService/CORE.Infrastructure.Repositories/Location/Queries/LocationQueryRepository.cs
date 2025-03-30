@@ -45,25 +45,25 @@ namespace CORE.Infrastructure.Repositories.Location.Queries
             IDatabase db = redis.GetDatabase(1); // Đảm bảo đúng database
             await db.KeyDeleteAsync("drivers:locations");
             // TP.HCM
-            await db.GeoAddAsync(redisKey, 106.7000, 10.7769, $"driver_hcm_1:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 106.7030, 10.7800, $"driver_hcm_2:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 106.6980, 10.7735, $"driver_hcm_3:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 106.7100, 10.7850, $"driver_hcm_4:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 106.7200, 10.7920, $"driver_hcm_5:{Guid.NewGuid()}");
+            await db.GeoAddAsync(redisKey, 106.7000, 10.7769, $"driver_hcm_1:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 106.7030, 10.7800, $"driver_hcm_2:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 106.6980, 10.7735, $"driver_hcm_3:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 106.7100, 10.7850, $"driver_hcm_4:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 106.7200, 10.7920, $"driver_hcm_5:{request.RideId}");
 
             // Hà Nội
-            await db.GeoAddAsync(redisKey, 105.8544, 21.0285, $"driver_hn_1:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 105.8600, 21.0320, $"driver_hn_2:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 105.8485, 21.0260, $"driver_hn_3:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 105.8700, 21.0400, $"driver_hn_4:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 105.8800, 21.0450, $"driver_hn_5:{Guid.NewGuid()}");
+            await db.GeoAddAsync(redisKey, 105.8544, 21.0285, $"driver_hn_1:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 105.8600, 21.0320, $"driver_hn_2:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 105.8485, 21.0260, $"driver_hn_3:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 105.8700, 21.0400, $"driver_hn_4:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 105.8800, 21.0450, $"driver_hn_5:{request.RideId}");
 
             // Đà Nẵng
-            await db.GeoAddAsync(redisKey, 108.2200, 16.0470, $"driver_dn_1:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 108.2300, 16.0500, $"driver_dn_2:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 108.2100, 16.0400, $"driver_dn_3:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 108.2400, 16.0600, $"driver_dn_4:{Guid.NewGuid()}");
-            await db.GeoAddAsync(redisKey, 108.2500, 16.0700, $"driver_dn_5:{Guid.NewGuid()}");
+            await db.GeoAddAsync(redisKey, 108.2200, 16.0470, $"driver_dn_1:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 108.2300, 16.0500, $"driver_dn_2:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 108.2100, 16.0400, $"driver_dn_3:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 108.2400, 16.0600, $"driver_dn_4:{request.RideId}");
+            await db.GeoAddAsync(redisKey, 108.2500, 16.0700, $"driver_dn_5:{request.RideId}");
 
             var geoRadiusResult = await db.GeoRadiusAsync(redisKey, request.PickupLongitude, 
                 request.PickupLatitude, 5, GeoUnit.Kilometers);

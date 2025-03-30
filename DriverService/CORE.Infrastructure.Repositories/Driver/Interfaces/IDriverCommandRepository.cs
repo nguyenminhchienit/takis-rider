@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CORE.Infrastructure.Repositories.Driver.Commands;
+using CORE.Infrastructure.Repositories.Driver.Producer;
 using CORE.Infrastructure.Shared.Models.Driver.Request;
 using CORE.Infrastructure.Shared.Models.Driver.Response;
 
